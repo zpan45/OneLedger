@@ -10,22 +10,22 @@ using OneLedger.Models;
 
 namespace OneLedger.Controllers
 {
-    public class ProductController : Controller
+    public class WalletController : Controller
     {
         private readonly OneLedgerContext _context;
 
-        public ProductController(OneLedgerContext context)
+        public WalletController(OneLedgerContext context)
         {
             _context = context;
         }
 
-        // GET: Product
+        // GET: Wallet
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Product.ToListAsync());
+            return View(await _context.Wallet.ToListAsync());
         }
 
-        // GET: Product/Details/5
+        // GET: Wallet/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace OneLedger.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product
+            var wallet = await _context.Wallet
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
+            if (wallet == null)
             {
                 return NotFound();
             }
 
-            return View(product);
+            return View(wallet);
         }
 
-        // GET: Product/Create
+        // GET: Wallet/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Product/Create
+        // POST: Wallet/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Price,NumOnHand")] Product product)
+        public async Task<IActionResult> Create([Bind("Id,Cash")] Wallet wallet)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(product);
+                _context.Add(wallet);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View(wallet);
         }
 
-        // GET: Product/Edit/5
+        // GET: Wallet/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace OneLedger.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product.FindAsync(id);
-            if (product == null)
+            var wallet = await _context.Wallet.FindAsync(id);
+            if (wallet == null)
             {
                 return NotFound();
             }
-            return View(product);
+            return View(wallet);
         }
 
-        // POST: Product/Edit/5
+        // POST: Wallet/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,NumOnHand")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Cash")] Wallet wallet)
         {
-            if (id != product.Id)
+            if (id != wallet.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace OneLedger.Controllers
             {
                 try
                 {
-                    _context.Update(product);
+                    _context.Update(wallet);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductExists(product.Id))
+                    if (!WalletExists(wallet.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace OneLedger.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View(wallet);
         }
 
-        // GET: Product/Delete/5
+        // GET: Wallet/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace OneLedger.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Product
+            var wallet = await _context.Wallet
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
+            if (wallet == null)
             {
                 return NotFound();
             }
 
-            return View(product);
+            return View(wallet);
         }
 
-        // POST: Product/Delete/5
+        // POST: Wallet/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var product = await _context.Product.FindAsync(id);
-            _context.Product.Remove(product);
+            var wallet = await _context.Wallet.FindAsync(id);
+            _context.Wallet.Remove(wallet);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProductExists(int id)
+        private bool WalletExists(int id)
         {
-            return _context.Product.Any(e => e.Id == id);
+            return _context.Wallet.Any(e => e.Id == id);
         }
     }
 }

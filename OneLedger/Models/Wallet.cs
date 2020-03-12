@@ -4,21 +4,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OneLedger.Models
 {
-    public class Product
+    public class Wallet
     {
         public int Id { get; set; }
 
-        [StringLength(30, MinimumLength = 2)]
-        [Required]
-        public string Name { get; set; }
-
         [DataType(DataType.Currency)]
         [Column(TypeName = "decimal(18, 2)")]
-        public decimal Price { get; set; }
-
-        [Required]
-        [Range(0, 10000)]
-        public int NumOnHand { get; set; }
-
+        public decimal Cash { get; set; }
     }
 }

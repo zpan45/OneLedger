@@ -12,5 +12,7 @@ namespace OneLedger.Data
         }
 
         public DbSet<Product> Product { get; set; }
+        public DbSet<Wallet> Wallet { get; set; }
+
     }
 }
